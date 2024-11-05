@@ -2,7 +2,7 @@ export class PlayerRepository {
     
     private readonly db;
     
-    constructor(db: never) {
+    constructor(db) {
         this.db = db;
     }
     
