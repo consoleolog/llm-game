@@ -50,13 +50,6 @@ export class PlayerDto {
     set playerPassword(value: string) {
         this._playerPassword = value;
     }
-    get playerLoginId(): string {
-        return this._playerLoginId;
-    }
-
-    set playerLoginId(value: string) {
-        this._playerLoginId = value;
-    }
     get playerId(): string {
         return this._playerId;
     }
@@ -64,9 +57,16 @@ export class PlayerDto {
     set playerId(value: string) {
         this._playerId = value;
     }
-    private _playerId : string;
+    get playerSn(): string {
+        return this._playerSn;
+    }
 
-    private _playerLoginId : string;
+    set playerSn(value: string) {
+        this._playerSn = value;
+    }
+    private _playerSn : string;
+
+    private _playerId : string;
 
     private _playerPassword: string;
 
@@ -83,8 +83,8 @@ export class PlayerDto {
     private _useYn: 'Y' | 'N';
 
     constructor(
+        playerSn : string,
         playerId : string,
-        playerLoginId : string,
         playerPassword: string,
         playerDisplayName: string,
         lastLoginDt: Date,
@@ -93,8 +93,8 @@ export class PlayerDto {
         updUser: string,
         useYn: 'Y' | 'N',
     ) {
+        this.playerSn = playerSn;
         this.playerId = playerId;
-        this.playerLoginId = playerLoginId;
         this.playerPassword = playerPassword;
         this.playerDisplayName = playerDisplayName;
         this.lastLoginDt = lastLoginDt;
@@ -104,23 +104,23 @@ export class PlayerDto {
         this.useYn = useYn;
     }
 
-    public toDto(player: Player): PlayerDto{
-        return PlayerDto.build(
-            player.getPlayerId,
-            player.getPlayerLoginId,
-            player.getPlayerPassword,
-            player.getPlayerDisplayName,
-            player.getLastLoginDt,
-            player.getRegDt,
-            player.getUpdDt,
-            player.getUpdUser,
-            player.getUseYn
+    public toEntity(playerDto: PlayerDto): Player {
+        return Player.build(
+            playerDto.playerSn,
+            playerDto.playerId,
+            playerDto.playerPassword,
+            playerDto.playerDisplayName,
+            playerDto.lastLoginDt,
+            playerDto.regDt,
+            playerDto.updDt,
+            playerDto.updUser,
+            playerDto.useYn,
         );
     }
 
     static build(
+        playerSn : string,
         playerId : string,
-        playerLoginId : string,
         playerPassword: string,
         playerDisplayName: string,
         lastLoginDt: Date,
@@ -130,8 +130,8 @@ export class PlayerDto {
         useYn: 'Y' | 'N',
     ): PlayerDto {
         return new PlayerDto(
+            playerSn,
             playerId,
-            playerLoginId,
             playerPassword,
             playerDisplayName,
             lastLoginDt,
